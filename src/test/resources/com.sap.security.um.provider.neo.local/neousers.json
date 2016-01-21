@@ -1,0 +1,44 @@
+{
+  "Users": [
+    {
+      "UID": "user",
+      "Password": "{SSHA}a7HORzqUuqydSRQk/ScOn19c0aXWd4J73uc\u003d",
+      "Roles": [],
+      "Attributes": [
+        {
+          "attributeName": "firstname",
+          "attributeValue": ""
+        },
+        {
+          "attributeName": "lastname",
+          "attributeValue": ""
+        },
+        {
+          "attributeName": "email",
+          "attributeValue": ""
+        }
+      ]
+    },
+    {
+      "UID": "admin",
+      "Password": "{SSHA}7mmT4fBDX9Ge6uHpAgbN6WTtdT4rBi4jW0w\u003d",
+      "Roles": [
+        "Admin"
+      ],
+      "Attributes": [
+        {
+          "attributeName": "firstname",
+          "attributeValue": ""
+        },
+        {
+          "attributeName": "lastname",
+          "attributeValue": ""
+        },
+        {
+          "attributeName": "email",
+          "attributeValue": ""
+        }
+      ]
+    }
+  ]
+}
