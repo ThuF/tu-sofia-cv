@@ -7,6 +7,7 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
 		<class>tu.sofia.cv.entity.PersonalInfo</class>
+		<class>tu.sofia.cv.entity.Skill</class>
 
 		<shared-cache-mode>NONE</shared-cache-mode>
 	</persistence-unit>
