@@ -179,7 +179,7 @@ public class EducationIntegrationTest extends IntegrationTestSupport {
 	}
 
 	@Test
-	public void testRemoveEducationWhenNoSkillIsAdded() throws Exception {
+	public void testRemoveEducationWhenNoEducationIsAdded() throws Exception {
 		Long id = 1L;
 		try {
 			API.delete(id);
