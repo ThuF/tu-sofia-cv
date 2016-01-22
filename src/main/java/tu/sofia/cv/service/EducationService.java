@@ -23,7 +23,7 @@ import tu.sofia.cv.entity.Education;
 import tu.sofia.cv.validation.EducationValidator;
 
 /**
- * Service for skills
+ * Service for educations
  */
 @Singleton
 @Path("/protected/admin/educations")
