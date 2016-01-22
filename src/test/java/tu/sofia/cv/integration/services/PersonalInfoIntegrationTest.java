@@ -50,7 +50,13 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 	}
 
 	private void removePersonalInfo() {
-		API.remove();
+		try {
+			API.delete();
+		} catch (RetrofitError e) {
+			if (e.getResponse().getStatus() != Status.NOT_FOUND.getStatusCode()) {
+				throw e;
+			}
+		}
 	}
 
 	@Test
@@ -66,6 +72,7 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 	public void testAddPersonalInfo() throws Exception {
 		Response response = API.add(expectedPersonalInfo);
 		assertResponseStatus(Status.CREATED, response);
+		expectedPersonalInfo.setPersonalInfoId(getResponseAsLong(response));
 
 		PersonalInfo actualPersonalInfo = API.get();
 		assertPersonalInfoEquals(expectedPersonalInfo, actualPersonalInfo);
@@ -112,7 +119,7 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 		try {
 			API.add(expectedPersonalInfo);
 		} catch (RetrofitError e) {
-			assertErrorResponse(e, Status.BAD_REQUEST, "Ther personal info was already created");
+			assertErrorResponse(e, Status.BAD_REQUEST, "The personal info was already created");
 		}
 	}
 
@@ -120,6 +127,7 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 	public void testUpdatePersonalInfo() throws Exception {
 		Response response = API.add(expectedPersonalInfo);
 		assertResponseStatus(Status.CREATED, response);
+		updatedPersonalInfo.setPersonalInfoId(getResponseAsLong(response));
 
 		response = API.update(updatedPersonalInfo);
 		assertResponseStatus(Status.NO_CONTENT, response);
@@ -128,14 +136,32 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 	}
 
 	@Test
+	public void testUpdatePersonalInfoWithNoPersonalInfoAdded() throws Exception {
+		try {
+			API.update(updatedPersonalInfo);
+		} catch (RetrofitError e) {
+			assertErrorResponse(e, Status.NOT_FOUND, "There is no personal info");
+		}
+	}
+
+	@Test
 	public void testDeletePersonalInfo() throws Exception {
 		Response response = API.add(expectedPersonalInfo);
 		assertResponseStatus(Status.CREATED, response);
 
-		response = API.remove();
+		response = API.delete();
 		assertResponseStatus(Status.NO_CONTENT, response);
 
 		testEmptyPersonalInfo();
+	}
+
+	@Test
+	public void testRemovePersonalInfoWithNoPersonalInfoAdded() throws Exception {
+		try {
+			API.delete();
+		} catch (RetrofitError e) {
+			assertErrorResponse(e, Status.NOT_FOUND, "There is no personal info");
+		}
 	}
 
 	@Test

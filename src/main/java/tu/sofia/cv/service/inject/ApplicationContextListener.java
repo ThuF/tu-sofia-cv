@@ -16,6 +16,7 @@ import com.google.inject.servlet.GuiceServletContextListener;
 
 import tu.sofia.cv.service.GeneralExceptionHandler;
 import tu.sofia.cv.service.GsonMessageBodyHandler;
+import tu.sofia.cv.service.PersonalInfoService;
 
 /**
  * This class handles the initialization of all Guice modules and all REST API
@@ -67,7 +68,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		getSingletons().add(new GeneralExceptionHandler());
 
 		// Services protected with the Admin role
-		// TODO Add services getSingletons().add(injector.getInstance(Clazz.class))
+		getSingletons().add(injector.getInstance(PersonalInfoService.class));
 
 		// Public proxy services
 		// TODO Add services getSingletons().add(injector.getInstance(Clazz.class))

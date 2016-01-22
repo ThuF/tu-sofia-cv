@@ -20,8 +20,10 @@ public interface PersonalInfoAPI {
 	Response add(@Body final PersonalInfo body);
 
 	@PUT("/protected/admin/personal-info")
+	@Headers("Accept: application/json")
 	Response update(@Body final PersonalInfo body);
 
 	@DELETE("/protected/admin/personal-info")
-	Response remove();
+	@Headers("Accept: application/json")
+	Response delete();
 }
