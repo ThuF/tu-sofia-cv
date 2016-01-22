@@ -80,14 +80,17 @@ public abstract class IntegrationTestSupport {
 	}
 
 	protected Date getDateOnly(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		return calendar.getTime();
-
+		Date dateOnly = null;
+		if (date != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			dateOnly = calendar.getTime();
+		}
+		return dateOnly;
 	}
 
 	private Response loginAsEveryone(RestAdapter logingRestAdapter) {

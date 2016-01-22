@@ -8,17 +8,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Entity class representing the T_SKILL database table
+ * Entity class representing the T_POSITION database table
  */
 @Entity
-@Table(name = "T_SKILL")
+@Table(name = "T_POSITION")
+@NamedQueries(@NamedQuery(name = Position.QUERY_NAME_FIND_BY_NULL_END_DATE, query = Position.QUERY_FIND_BY_NULL_END_DATE))
 public class Position implements IJPAEntity<Long>, Serializable {
+
+	static final String QUERY_FIND_BY_NULL_END_DATE = "select p from Position p where p.endDate is null";
+
+	/**
+	 * The name of the query for finding all positions with end date null
+	 */
+	public static final String QUERY_NAME_FIND_BY_NULL_END_DATE = "findByNullEndDate";
 
 	private static final long serialVersionUID = -5154928578394942815L;
 

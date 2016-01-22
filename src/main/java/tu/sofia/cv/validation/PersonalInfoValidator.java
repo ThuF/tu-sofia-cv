@@ -39,7 +39,7 @@ public class PersonalInfoValidator implements IValidator<PersonalInfo> {
 
 	@Override
 	public boolean isValidCreate(PersonalInfo entity) {
-		validationMessage = null;
+		clear();
 		if (haveAllProperties(entity)) {
 			if (dao.findAll().isEmpty()) {
 				return true;
@@ -51,7 +51,7 @@ public class PersonalInfoValidator implements IValidator<PersonalInfo> {
 
 	@Override
 	public boolean isValidUpdate(PersonalInfo entity) {
-		validationMessage = null;
+		clear();
 		if (haveAllProperties(entity)) {
 			if (!dao.findAll().isEmpty()) {
 				return true;
@@ -60,6 +60,21 @@ public class PersonalInfoValidator implements IValidator<PersonalInfo> {
 			validationStatus = Status.NOT_FOUND;
 		}
 		return false;
+	}
+
+	@Override
+	public String getValidationMessage() {
+		return validationMessage;
+	}
+
+	@Override
+	public Status getResponseStatus() {
+		return validationStatus;
+	}
+
+	private void clear() {
+		validationMessage = null;
+		validationStatus = null;
 	}
 
 	private boolean haveAllProperties(PersonalInfo entity) {
@@ -77,15 +92,4 @@ public class PersonalInfoValidator implements IValidator<PersonalInfo> {
 		}
 		return isValid;
 	}
-
-	@Override
-	public String getValidationMessage() {
-		return validationMessage;
-	}
-
-	@Override
-	public Status getResponseStatus() {
-		return validationStatus;
-	}
-
 }
