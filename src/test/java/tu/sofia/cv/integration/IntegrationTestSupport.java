@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.core.Response.Status;
@@ -75,6 +77,17 @@ public abstract class IntegrationTestSupport {
 		ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
 		assertEquals(expectedStatus.getStatusCode(), message.getStatus());
 		assertEquals(expectedMessage, message.getMessage());
+	}
+
+	protected Date getDateOnly(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
+
 	}
 
 	private Response loginAsEveryone(RestAdapter logingRestAdapter) {

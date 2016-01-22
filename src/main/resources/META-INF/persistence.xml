@@ -8,6 +8,7 @@
 
 		<class>tu.sofia.cv.entity.PersonalInfo</class>
 		<class>tu.sofia.cv.entity.Skill</class>
+		<class>tu.sofia.cv.entity.Education</class>
 
 		<shared-cache-mode>NONE</shared-cache-mode>
 		<properties>
