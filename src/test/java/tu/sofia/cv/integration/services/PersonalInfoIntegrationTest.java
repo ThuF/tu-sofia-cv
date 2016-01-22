@@ -1,74 +1,42 @@
 package tu.sofia.cv.integration.services;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.ws.rs.core.Response.Status;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import tu.sofia.cv.api.PaymentAPI;
-import tu.sofia.cv.api.RoomsAPI;
-import tu.sofia.cv.entity.Room;
-import tu.sofia.cv.entity.RoomPrice;
-import tu.sofia.cv.entity.additional.BedType;
-import tu.sofia.cv.entity.additional.RoomType;
-import tu.sofia.cv.entity.additional.RoomView;
+import tu.sofia.cv.api.PersonalInfoAPI;
+import tu.sofia.cv.entity.PersonalInfo;
 import tu.sofia.cv.integration.IntegrationTestSupport;
 import tu.sofia.cv.integration.UserRole;
-import tu.sofia.cv.validation.ApplicationExceptionMessage;
 
 @SuppressWarnings("javadoc")
-public class PaymentIntegrationTest extends IntegrationTestSupport {
+public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 
-	private static final List<RoomPrice> testData = new ArrayList<RoomPrice>();
-	private PaymentAPI API;
-	private RoomsAPI API_ROOMS;
-
-	@BeforeClass
-	public static void initialize() throws Exception {
-		RoomPrice data1 = new RoomPrice();
-		data1.setPrice(100D);
-		testData.add(data1);
-
-		RoomPrice data2 = new RoomPrice();
-		data2.setPrice(250D);
-		testData.add(data2);
-	}
+	private PersonalInfoAPI API;
+	private PersonalInfo expectedPersonalInfo = new PersonalInfo();
+	private PersonalInfo updatedPersonalInfo = new PersonalInfo();
 
 	@Before
 	public void setUp() throws Exception {
-		API = createRestAdapter().create(PaymentAPI.class);
-		API_ROOMS = createRestAdapter().create(RoomsAPI.class);
-		login(UserRole.ADMIN);
+		expectedPersonalInfo = createPersonalInfo("Yordan", "Pavlov", "Yordan Pavlov working at SAP");
+		updatedPersonalInfo = createPersonalInfo("Georgi", "Georgiev", "Georgi Georgiev working at IBM");
 
-		addRooms();
+		API = createRestAdapter().create(PersonalInfoAPI.class);
+		login(UserRole.ADMIN);
 	}
 
-	private void addRooms() throws IOException {
-		Room data1 = new Room();
-		data1.setRoomType(RoomType.DELUXE);
-		data1.setRoomView(RoomView.OCEAN_VIEW);
-		data1.setBedType(BedType.CALIFORNIA_KING);
-		data1.setDescription("The perfect room for a vacation!");
-		Response response = API_ROOMS.add(data1);
-		testData.get(0).setRoomId(getResponseAsLong(response));
-
-		Room data2 = new Room();
-		data2.setRoomType(RoomType.STANDARD);
-		data2.setRoomView(RoomView.CITY_VIEW);
-		data2.setBedType(BedType.DOUBLE);
-		response = API_ROOMS.add(data1);
-		testData.get(1).setRoomId(getResponseAsLong(response));
+	private PersonalInfo createPersonalInfo(String firstName, String lastName, String headline) {
+		PersonalInfo personalInfo = new PersonalInfo();
+		personalInfo.setFirstName(firstName);
+		personalInfo.setLastName(lastName);
+		personalInfo.setHeadline(headline);
+		return personalInfo;
 	}
 
 	@After
@@ -76,164 +44,116 @@ public class PaymentIntegrationTest extends IntegrationTestSupport {
 		logout();
 		login(UserRole.ADMIN);
 
-		removeRoomPrices();
-		removeRooms();
+		removePersonalInfo();
 
 		logout();
 	}
 
-	private void removeRoomPrices() {
-		for (RoomPrice next : API.get()) {
-			Response response = API.remove(next.getRoomId());
-			assertResponseStatus(Status.NO_CONTENT, response);
-		}
-		assertEquals(new Long(0), API.count());
-	}
-
-	private void removeRooms() {
-		for (Room next : API_ROOMS.get()) {
-			Response response = API_ROOMS.remove(next.getRoomId());
-			assertResponseStatus(Status.NO_CONTENT, response);
-		}
-		assertEquals(new Long(0), API_ROOMS.count());
+	private void removePersonalInfo() {
+		API.remove();
 	}
 
 	@Test
-	public void testEmpty() throws Exception {
-		List<RoomPrice> results = API.get();
-		assertEquals(0, results.size());
-		assertEquals(new Long(0), API.count());
-	}
-
-	@Test
-	public void testAddEntity() throws Exception {
-		Response response = API.add(testData.get(0));
-		assertResponseStatus(Status.CREATED, response);
-		assertEquals(new Long(1), API.count());
-	}
-
-	@Test
-	public void testAddInvalidEntityShouldReturnBadRequest() throws Exception {
+	public void testEmptyPersonalInfo() throws Exception {
 		try {
-			API.add(new RoomPrice());
+			API.get();
 		} catch (RetrofitError e) {
-			assertResponseStatus(Status.BAD_REQUEST, e.getResponse());
-			ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
-			assertEquals(Status.BAD_REQUEST.getStatusCode(), message.getStatus());
-			assertEquals("The [roomId] property can't be null", message.getMessage());
+			assertErrorResponse(e, Status.NOT_FOUND, "There is no personal info");
 		}
 	}
 
 	@Test
-	public void testAddInvalidEntityShouldReturnBadRequest2() throws Exception {
-		try {
-			RoomPrice roomPrice = new RoomPrice();
-			roomPrice.setRoomId(testData.get(0).getRoomId());
-			API.add(roomPrice);
-		} catch (RetrofitError e) {
-			assertResponseStatus(Status.BAD_REQUEST, e.getResponse());
-			ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
-			assertEquals(Status.BAD_REQUEST.getStatusCode(), message.getStatus());
-			assertEquals("The [price] property can't be null", message.getMessage());
-		}
-	}
-
-	@Test
-	public void testAddInvalidEntityShouldReturnBadRequest3() throws Exception {
-		long roomId = testData.get(0).getRoomId() + testData.get(1).getRoomId();
-		try {
-			RoomPrice roomPrice = new RoomPrice();
-			roomPrice.setRoomId(roomId);
-			roomPrice.setPrice(50D);
-			API.add(roomPrice);
-		} catch (RetrofitError e) {
-			assertResponseStatus(Status.BAD_REQUEST, e.getResponse());
-			ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
-			assertEquals(Status.BAD_REQUEST.getStatusCode(), message.getStatus());
-			assertEquals("There is no room with [roomId=" + roomId + "]", message.getMessage());
-		}
-	}
-
-	@Test
-	public void testUpdate() throws Exception {
-		Response response = API.add(testData.get(0));
+	public void testAddPersonalInfo() throws Exception {
+		Response response = API.add(expectedPersonalInfo);
 		assertResponseStatus(Status.CREATED, response);
 
-		response = API.updatePrice(testData.get(0).getRoomId(), testData.get(1).getPrice());
+		PersonalInfo actualPersonalInfo = API.get();
+		assertPersonalInfoEquals(expectedPersonalInfo, actualPersonalInfo);
+	}
+
+	@Test
+	public void testAddPersonalInfoMissingFirstName() throws Exception {
+		expectedPersonalInfo.setFirstName(null);
+
+		try {
+			API.add(expectedPersonalInfo);
+		} catch (RetrofitError e) {
+			assertErrorResponse(e, Status.BAD_REQUEST, "The [firstName] property can't be null");
+		}
+	}
+
+	@Test
+	public void testAddPersonalInfoMissingLastName() throws Exception {
+		expectedPersonalInfo.setLastName(null);
+
+		try {
+			API.add(expectedPersonalInfo);
+		} catch (RetrofitError e) {
+			assertErrorResponse(e, Status.BAD_REQUEST, "The [lastName] property can't be null");
+		}
+	}
+
+	@Test
+	public void testAddPersonalInfoMissingHeadline() throws Exception {
+		expectedPersonalInfo.setHeadline(null);
+
+		try {
+			API.add(expectedPersonalInfo);
+		} catch (RetrofitError e) {
+			assertErrorResponse(e, Status.BAD_REQUEST, "The [headline] property can't be null");
+		}
+	}
+
+	@Test
+	public void testAddPersonalInfoTwice() throws Exception {
+		Response response = API.add(expectedPersonalInfo);
+		assertResponseStatus(Status.CREATED, response);
+
+		try {
+			API.add(expectedPersonalInfo);
+		} catch (RetrofitError e) {
+			assertErrorResponse(e, Status.BAD_REQUEST, "Ther personal info was already created");
+		}
+	}
+
+	@Test
+	public void testUpdatePersonalInfo() throws Exception {
+		Response response = API.add(expectedPersonalInfo);
+		assertResponseStatus(Status.CREATED, response);
+
+		response = API.update(updatedPersonalInfo);
 		assertResponseStatus(Status.NO_CONTENT, response);
 
-		List<RoomPrice> results = API.get();
-		assertEquals(1, results.size());
-		assertEquals(new Long(1), API.count());
+		assertPersonalInfoEquals(updatedPersonalInfo, API.get());
 	}
 
 	@Test
-	public void testUpdatePriceOfNotPersistedEntityShouldReturnNotFound() throws Exception {
-		long roomId = testData.get(0).getRoomId() + testData.get(1).getRoomId();
-		try {
-			API.updatePrice(roomId, 100D);
-		} catch (RetrofitError e) {
-			assertResponseStatus(Status.NOT_FOUND, e.getResponse());
-			ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
-			assertEquals(Status.NOT_FOUND.getStatusCode(), message.getStatus());
-			assertEquals("No room price found with [roomId=" + roomId + "]", message.getMessage());
-		}
-	}
-
-	@Test
-	public void testRemoveEntity() throws Exception {
-		Response response = API.add(testData.get(0));
+	public void testDeletePersonalInfo() throws Exception {
+		Response response = API.add(expectedPersonalInfo);
 		assertResponseStatus(Status.CREATED, response);
 
-		response = API.remove(testData.get(0).getRoomId());
+		response = API.remove();
 		assertResponseStatus(Status.NO_CONTENT, response);
-		assertEquals(new Long(0), API.count());
+
+		testEmptyPersonalInfo();
 	}
 
 	@Test
-	public void testRemoveOfNotPersistedEntityShouldReturnNotFound() throws Exception {
-		Long roomId = testData.get(0).getRoomId() + testData.get(1).getRoomId();
+	public void testForbidden() throws Exception {
+		logout();
+		login(UserRole.EVERYONE);
+
 		try {
-			API.remove(roomId);
+			API.add(expectedPersonalInfo);
 		} catch (RetrofitError e) {
-			assertResponseStatus(Status.NOT_FOUND, e.getResponse());
-			ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
-			assertEquals(Status.NOT_FOUND.getStatusCode(), message.getStatus());
-			assertEquals("No room price found with [roomId=" + roomId + "]", message.getMessage());
+			assertResponseStatus(Status.FORBIDDEN, e.getResponse());
 		}
 	}
 
-	@Test
-	public void testGetSingleEntity() throws Exception {
-		Response response = API.add(testData.get(0));
-		assertResponseStatus(Status.CREATED, response);
-
-		Double result = API.getPrice(testData.get(0).getRoomId());
-
-		assertEquals(testData.get(0).getPrice(), result);
-		assertEquals(new Long(1), API.count());
-	}
-
-	@Test
-	public void testAddTwoEntities() throws Exception {
-		for (RoomPrice next : testData) {
-			Response response = API.add(next);
-			assertResponseStatus(Status.CREATED, response);
-		}
-
-		List<RoomPrice> results = API.get();
-		assertNotNull(results);
-		assertEquals(2, results.size());
-		for (int i = 0; i < testData.size(); i++) {
-			assertRoomPriceEquals(testData.get(i), results.get(i));
-		}
-
-		assertEquals(new Long(2), API.count());
-	}
-
-	private void assertRoomPriceEquals(RoomPrice expected, RoomPrice actual) {
-		assertNotNull(actual);
-		assertEquals(expected.getRoomId(), actual.getRoomId());
-		assertEquals(expected.getPrice(), actual.getPrice());
+	private void assertPersonalInfoEquals(PersonalInfo expected, PersonalInfo actual) {
+		assertEquals("The [personalInfoId] properties are not equals", expected.getPersonalInfoId(), actual.getPersonalInfoId());
+		assertEquals("The [firstName] properties are not equals", expected.getFirstName(), actual.getFirstName());
+		assertEquals("The [lastName] properties are not equals", expected.getLastName(), actual.getLastName());
+		assertEquals("The [headline] properties are not equals", expected.getHeadline(), actual.getHeadline());
 	}
 }

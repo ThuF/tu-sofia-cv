@@ -70,6 +70,13 @@ public abstract class IntegrationTestSupport {
 		assertEquals(expectedStatus.getStatusCode(), response.getStatus());
 	}
 
+	protected void assertErrorResponse(RetrofitError e, Status expectedStatus, String expectedMessage) throws IOException {
+		assertResponseStatus(expectedStatus, e.getResponse());
+		ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
+		assertEquals(expectedStatus.getStatusCode(), message.getStatus());
+		assertEquals(expectedMessage, message.getMessage());
+	}
+
 	private Response loginAsEveryone(RestAdapter logingRestAdapter) {
 		Response response;
 		try {
