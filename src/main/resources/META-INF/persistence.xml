@@ -11,6 +11,7 @@
 		<class>tu.sofia.cv.entity.Education</class>
 		<class>tu.sofia.cv.entity.Project</class>
 		<class>tu.sofia.cv.entity.Company</class>
+		<class>tu.sofia.cv.entity.Position</class>
 
 		<shared-cache-mode>NONE</shared-cache-mode>
 		<properties>
