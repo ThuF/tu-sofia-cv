@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "T_PERSONAL_INFO")
-public class PersonalInfo implements Serializable {
+public class PersonalInfo implements IJPAEntity<Long>, Serializable {
 
 	private static final long serialVersionUID = 2513369403512173499L;
 
@@ -105,6 +105,11 @@ public class PersonalInfo implements Serializable {
 	 */
 	public void setHeadline(String headline) {
 		this.headline = headline;
+	}
+
+	@Override
+	public Long getKeyValue() {
+		return getPersonalInfoId();
 	}
 
 }

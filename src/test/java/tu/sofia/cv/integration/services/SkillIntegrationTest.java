@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.Random;
 
 import javax.ws.rs.core.Response.Status;
 
@@ -112,16 +111,17 @@ public class SkillIntegrationTest extends IntegrationTestSupport {
 		Response response = API.add(expectedSkill);
 		assertResponseStatus(Status.CREATED, response);
 		expectedSkill.setSkillId(getResponseAsLong(response));
+		updatedSkill.setSkillId(expectedSkill.getSkillId());
 
 		response = API.update(expectedSkill.getSkillId(), updatedSkill);
 		assertResponseStatus(Status.NO_CONTENT, response);
 
-		assertSkillEquals(updatedSkill, API.get(expectedSkill.getSkillId()));
+		assertSkillEquals(updatedSkill, API.get(updatedSkill.getSkillId()));
 	}
 
 	@Test
 	public void testUpdateSkillWhenNoSkillIsAdded() throws Exception {
-		Long skillId = new Random().nextLong();
+		Long skillId = 1L;
 		try {
 			API.update(skillId, updatedSkill);
 		} catch (RetrofitError e) {
@@ -143,7 +143,7 @@ public class SkillIntegrationTest extends IntegrationTestSupport {
 
 	@Test
 	public void testRemoveSkillWhenNoSkillIsAdded() throws Exception {
-		Long skillId = new Random().nextLong();
+		Long skillId = 1L;
 		try {
 			API.delete(skillId);
 		} catch (RetrofitError e) {

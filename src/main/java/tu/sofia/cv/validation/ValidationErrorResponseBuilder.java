@@ -23,11 +23,12 @@ public class ValidationErrorResponseBuilder {
 
 	/**
 	 * Returns HTTP 400 Bad Request response
-	 * 
+	 *
 	 * @param validator
 	 * @return HTTP 400 Bad Request response
 	 */
-	public static Response toResponse(IValidator validator) {
-		return toResponse(Status.BAD_REQUEST, validator.getValidationMessage());
+	public static Response toResponse(IValidator<?> validator) {
+		Status status = validator.getResponseStatus() != null ? validator.getResponseStatus() : Status.BAD_REQUEST;
+		return toResponse(status, validator.getValidationMessage());
 	}
 }

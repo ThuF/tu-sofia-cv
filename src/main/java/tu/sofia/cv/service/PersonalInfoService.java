@@ -80,7 +80,7 @@ public class PersonalInfoService {
 		unitOfWorkUtils.begin();
 
 		Response response = null;
-		if (personalInfoValidator.isValid(personalInfo, personalInfoDao)) {
+		if (personalInfoValidator.isValidCreate(personalInfo)) {
 			personalInfoDao.create(personalInfo);
 			response = Response.status(Status.CREATED).entity(personalInfo.getPersonalInfoId()).build();
 		} else {
@@ -105,13 +105,13 @@ public class PersonalInfoService {
 
 		Response response = null;
 		List<PersonalInfo> results = personalInfoDao.findAll();
-		if (results.isEmpty()) {
-			response = ValidationErrorResponseBuilder.toResponse(Status.NOT_FOUND, "There is no personal info");
-		} else {
+		if (personalInfoValidator.isValidUpdate(personalInfo)) {
 			PersonalInfo persistedPersonalInfo = results.get(0);
 			updatePersonalInfoProperties(persistedPersonalInfo, personalInfo);
 			personalInfoDao.update(persistedPersonalInfo);
 			response = Response.status(Status.NO_CONTENT).build();
+		} else {
+			response = ValidationErrorResponseBuilder.toResponse(personalInfoValidator);
 		}
 
 		unitOfWorkUtils.end();

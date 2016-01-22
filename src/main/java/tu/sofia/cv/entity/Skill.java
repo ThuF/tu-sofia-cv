@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "T_SKILL")
-public class Skill implements Serializable {
+public class Skill implements IJPAEntity<Long>, Serializable {
 
 	private static final long serialVersionUID = 8733337025341018485L;
 
@@ -62,4 +62,10 @@ public class Skill implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public Long getKeyValue() {
+		return getSkillId();
+	}
+
 }
