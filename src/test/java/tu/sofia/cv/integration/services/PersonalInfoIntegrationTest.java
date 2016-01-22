@@ -79,7 +79,7 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 	}
 
 	@Test
-	public void testAddPersonalInfoMissingFirstName() throws Exception {
+	public void testAddPersonalInfoWithMissingFirstName() throws Exception {
 		expectedPersonalInfo.setFirstName(null);
 
 		try {
@@ -90,7 +90,7 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 	}
 
 	@Test
-	public void testAddPersonalInfoMissingLastName() throws Exception {
+	public void testAddPersonalInfoWithMissingLastName() throws Exception {
 		expectedPersonalInfo.setLastName(null);
 
 		try {
@@ -101,7 +101,7 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 	}
 
 	@Test
-	public void testAddPersonalInfoMissingHeadline() throws Exception {
+	public void testAddPersonalInfoWithMissingHeadline() throws Exception {
 		expectedPersonalInfo.setHeadline(null);
 
 		try {
@@ -136,7 +136,7 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 	}
 
 	@Test
-	public void testUpdatePersonalInfoWithNoPersonalInfoAdded() throws Exception {
+	public void testUpdatePersonalInfoWhenNoPersonalInfoAdded() throws Exception {
 		try {
 			API.update(updatedPersonalInfo);
 		} catch (RetrofitError e) {
@@ -156,7 +156,7 @@ public class PersonalInfoIntegrationTest extends IntegrationTestSupport {
 	}
 
 	@Test
-	public void testRemovePersonalInfoWithNoPersonalInfoAdded() throws Exception {
+	public void testRemovePersonalInfoWhenNoPersonalInfoAdded() throws Exception {
 		try {
 			API.delete();
 		} catch (RetrofitError e) {
