@@ -18,18 +18,18 @@ public interface SkillAPI {
 	@GET("/protected/admin/skills")
 	List<Skill> get();
 
-	@GET("/protected/admin/skills/{skillId}")
-	Skill get(@Path("skillId") final Long skillId);
+	@GET("/protected/admin/skills/{id}")
+	Skill get(@Path("id") final Long id);
 
 	@POST("/protected/admin/skills")
 	@Headers("Accept: application/json")
 	Response add(@Body final Skill body);
 
-	@PUT("/protected/admin/skills/{skillId}")
+	@PUT("/protected/admin/skills/{id}")
 	@Headers("Accept: application/json")
-	Response update(@Path("skillId") final Long skillId, @Body final Skill body);
+	Response update(@Path("id") final Long id, @Body final Skill body);
 
-	@DELETE("/protected/admin/skills/{skillId}")
+	@DELETE("/protected/admin/skills/{id}")
 	@Headers("Accept: application/json")
-	Response delete(@Path("skillId") final Long skillId);
+	Response delete(@Path("id") final Long id);
 }
