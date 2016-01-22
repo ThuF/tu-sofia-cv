@@ -63,7 +63,7 @@ public class SkillService extends AbstractCRUDService<Long, Skill> {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Skill getSkills(@PathParam("id") final Long id) {
+	public Skill getSkill(@PathParam("id") final Long id) {
 		return get(id);
 	}
 
@@ -96,11 +96,11 @@ public class SkillService extends AbstractCRUDService<Long, Skill> {
 	}
 
 	/**
-	 * Deletes existing personal info
-	 * 
+	 * Deletes existing skill
+	 *
 	 * @param id
 	 * @return HTTP 204 NO CONTENT if the deletion was successful or
-	 *         HTTP 404 NOT FOUND if there was no personal info
+	 *         HTTP 404 NOT FOUND if there was no such skill
 	 */
 	@DELETE
 	@Path("/{id}")
