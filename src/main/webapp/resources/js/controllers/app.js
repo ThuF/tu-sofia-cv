@@ -5,7 +5,10 @@ app.controller('CVController', function($scope, $http) {
 	$scope.personalInfo = {
 			'firstName': 'Yordan',
 			'lastName': 'Pavlov',
-			'headline': 'Software Developer @ SAP'
+			'headline': 'Software Developer @ SAP',
+			'facebookProfileUrl': 'https://www.facebook.com/ThuF1',
+			'twitterProfileUrl': 'https://twitter.com/ThuF1',
+			'linkedinProfileUrl': 'https://www.linkedin.com/in/jordan-pavlov-ab3602107'
 	};
 
 	$scope.skills = [];
