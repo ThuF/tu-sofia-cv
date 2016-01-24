@@ -2,7 +2,9 @@ var app = angular.module('cv', []);
 
 app.controller('CVController', function($scope, $http) {
 
-	$scope.isAdmin = true;
+	$http.get('../../api/v1/public/roles/admin').success(function(data) {
+		$scope.isAdmin = data;
+	});
 
 	$http.get('../../api/v1/public/personal-info').success(function(data) {
 		$scope.personalInfo = data;

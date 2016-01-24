@@ -21,6 +21,7 @@ import tu.sofia.cv.service.GsonMessageBodyHandler;
 import tu.sofia.cv.service.PersonalInfoService;
 import tu.sofia.cv.service.PositionService;
 import tu.sofia.cv.service.ProjectService;
+import tu.sofia.cv.service.RolesPublicService;
 import tu.sofia.cv.service.SkillService;
 import tu.sofia.cv.service.proxy.publics.PersonalInfoPublicProxy;
 
@@ -80,6 +81,9 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		getSingletons().add(injector.getInstance(ProjectService.class));
 		getSingletons().add(injector.getInstance(CompanyService.class));
 		getSingletons().add(injector.getInstance(PositionService.class));
+
+		// Public services
+		getSingletons().add(injector.getInstance(RolesPublicService.class));
 
 		// Public proxy services
 		getSingletons().add(injector.getInstance(PersonalInfoPublicProxy.class));
