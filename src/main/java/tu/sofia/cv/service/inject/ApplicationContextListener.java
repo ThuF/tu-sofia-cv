@@ -22,6 +22,7 @@ import tu.sofia.cv.service.PersonalInfoService;
 import tu.sofia.cv.service.PositionService;
 import tu.sofia.cv.service.ProjectService;
 import tu.sofia.cv.service.SkillService;
+import tu.sofia.cv.service.proxy.publics.PersonalInfoPublicProxy;
 
 /**
  * This class handles the initialization of all Guice modules and all REST API
@@ -81,7 +82,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		getSingletons().add(injector.getInstance(PositionService.class));
 
 		// Public proxy services
-		// TODO Add services getSingletons().add(injector.getInstance(Clazz.class))
+		getSingletons().add(injector.getInstance(PersonalInfoPublicProxy.class));
 	}
 
 	/**
