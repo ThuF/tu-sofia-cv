@@ -10,21 +10,27 @@ app.controller('CVController', function($scope, $http) {
 		$scope.personalInfo = data;
 	});
 
-	$scope.skills = [];
+	$http.get('../../api/v1/public/skills/count').success(function(data) {
+		$scope.skillsCount = data;
+	});
 
-	$scope.skillGroups = [{
-		'name': 'E-Commerce',
-		'highlight': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.',
-		'icon': 'fa fa-shopping-cart'
-	}, {
-		'name': 'Responsive Design',
-		'highlight': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.',
-		'icon': 'fa fa-laptop'
-	}, {
-		'name': 'Web Security',
-		'highlight': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.',
-		'icon': 'fa fa-lock'
-	}];
+	$http.get('../../api/v1/public/skills/groups').success(function(data) {
+		$scope.skillGroups = data;
+	});
+
+//	$scope.skillGroups = [{
+//		'name': 'E-Commerce',
+//		'highlight': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.',
+//		'icon': 'fa fa-shopping-cart'
+//	}, {
+//		'name': 'Responsive Design',
+//		'highlight': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.',
+//		'icon': 'fa fa-laptop'
+//	}, {
+//		'name': 'Web Security',
+//		'highlight': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.',
+//		'icon': 'fa fa-lock'
+//	}];
 
 	$scope.projects = [{
 		'projectId': 1,

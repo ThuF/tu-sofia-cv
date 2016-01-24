@@ -20,6 +20,7 @@ import com.google.inject.Singleton;
 import tu.sofia.cv.common.UnitOfWorkUtils;
 import tu.sofia.cv.dao.SkillDao;
 import tu.sofia.cv.entity.Skill;
+import tu.sofia.cv.entity.additional.SkillType;
 import tu.sofia.cv.validation.SkillValidator;
 
 /**
@@ -31,6 +32,8 @@ public class SkillService extends AbstractCRUDService<Long, Skill> {
 
 	private static final String ERROR_THERE_IS_NO_SKILL_WITH_SKILL_ID_MESSAGE = "There is no skill with [skillId={0}]";
 
+	private SkillDao skillDao;
+
 	/**
 	 * Constructor
 	 *
@@ -41,6 +44,7 @@ public class SkillService extends AbstractCRUDService<Long, Skill> {
 	@Inject
 	public SkillService(SkillDao skillDao, SkillValidator skillValidator, UnitOfWorkUtils unitOfWorkUtils) {
 		super(skillDao, skillValidator, unitOfWorkUtils);
+		this.skillDao = skillDao;
 	}
 
 	/**
@@ -52,6 +56,19 @@ public class SkillService extends AbstractCRUDService<Long, Skill> {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Skill> getSkills() {
 		return getAll();
+	}
+
+	/**
+	 * Returns a list of skills filtered by type
+	 *
+	 * @param type
+	 * @return a list of skills filtered by type
+	 */
+	@GET
+	@Path("/type/{skillType}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Skill> getSkills(@PathParam("skillType") final SkillType type) {
+		return skillDao.findByType(type);
 	}
 
 	/**
@@ -106,6 +123,17 @@ public class SkillService extends AbstractCRUDService<Long, Skill> {
 	@Path("/{id}")
 	public Response deleteSkill(@PathParam("id") final Long id) {
 		return delete(id);
+	}
+
+	/**
+	 * Returns the count of all skills
+	 *
+	 * @return the count of all skills
+	 */
+	@GET
+	@Path("/count")
+	public Long count() {
+		return countAll();
 	}
 
 	@Override

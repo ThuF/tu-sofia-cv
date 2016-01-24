@@ -101,4 +101,8 @@ public abstract class AbstractCRUDService<Key, Entity extends IJPAEntity<Key>> {
 		unitOfWorkUtils.end();
 		return response;
 	}
+
+	protected Long countAll() {
+		return dao.countAll();
+	}
 }
