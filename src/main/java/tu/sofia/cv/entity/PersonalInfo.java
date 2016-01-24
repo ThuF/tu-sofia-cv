@@ -31,6 +31,15 @@ public class PersonalInfo implements IJPAEntity<Long>, Serializable {
 	@Column(length = 150, nullable = false)
 	private String headline;
 
+	@Column(length = 150)
+	private String facebookProfileUrl;
+
+	@Column(length = 150)
+	private String twitterProfileUrl;
+
+	@Column(length = 150)
+	private String linkedinProfileUrl;
+
 	/**
 	 * Returns the personal info Id
 	 *
@@ -105,6 +114,62 @@ public class PersonalInfo implements IJPAEntity<Long>, Serializable {
 	 */
 	public void setHeadline(String headline) {
 		this.headline = headline;
+	}
+
+	/**
+	 * Returns the facebook profile URL
+	 *
+	 * @return the facebook profile URL
+	 */
+	public String getFacebookProfileUrl() {
+		return facebookProfileUrl;
+	}
+
+	/**
+	 * Sets the facebook profile URL
+	 *
+	 * @param facebookProfileUrl
+	 *            the facebook profile URL
+	 */
+	public void setFacebookProfileUrl(String facebookProfileUrl) {
+		this.facebookProfileUrl = facebookProfileUrl;
+	}
+
+	/**
+	 * Returns the twitter profile URL
+	 *
+	 * @return the twitter profile URL
+	 */
+	public String getTwitterProfileUrl() {
+		return twitterProfileUrl;
+	}
+
+	/**
+	 * Sets the twitter profile URL
+	 * 
+	 * @param twitterProfileUrl
+	 *            the twitter profile URL
+	 */
+	public void setTwitterProfileUrl(String twitterProfileUrl) {
+		this.twitterProfileUrl = twitterProfileUrl;
+	}
+
+	/**
+	 * Returns the linkedin profile URL
+	 * 
+	 * @return the linkedin profile URL
+	 */
+	public String getLinkedinProfileUrl() {
+		return linkedinProfileUrl;
+	}
+
+	/**
+	 * Sets the linkedin profile URL
+	 * 
+	 * @param linkedinProfileUrl
+	 */
+	public void setLinkedinProfileUrl(String linkedinProfileUrl) {
+		this.linkedinProfileUrl = linkedinProfileUrl;
 	}
 
 	@Override
