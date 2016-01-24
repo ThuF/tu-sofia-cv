@@ -24,6 +24,7 @@ import tu.sofia.cv.service.ProjectService;
 import tu.sofia.cv.service.RolesPublicService;
 import tu.sofia.cv.service.SkillService;
 import tu.sofia.cv.service.proxy.publics.PersonalInfoPublicProxy;
+import tu.sofia.cv.service.proxy.publics.ProjectPublicProxy;
 import tu.sofia.cv.service.proxy.publics.SkillPublicProxy;
 
 /**
@@ -89,6 +90,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		// Public proxy services
 		getSingletons().add(injector.getInstance(PersonalInfoPublicProxy.class));
 		getSingletons().add(injector.getInstance(SkillPublicProxy.class));
+		getSingletons().add(injector.getInstance(ProjectPublicProxy.class));
 	}
 
 	/**

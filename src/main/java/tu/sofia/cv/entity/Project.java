@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -14,9 +16,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "T_PROJECT")
+@NamedQueries({ @NamedQuery(name = Project.QUERY_NAME_FIND_ALL_PUBLIC_PROJECTS, query = Project.QUERY_FIND_ALL_PUBLIC_PROJECTS) })
 public class Project implements IJPAEntity<Long>, Serializable {
 
 	private static final long serialVersionUID = -8781817666319382716L;
+
+	/**
+	 * The name of the query for finding all public projects
+	 */
+	public static final String QUERY_NAME_FIND_ALL_PUBLIC_PROJECTS = "findAllPublicProjects";
+	static final String QUERY_FIND_ALL_PUBLIC_PROJECTS = "select p from Project p where p.isPublic = true";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +49,7 @@ public class Project implements IJPAEntity<Long>, Serializable {
 	@Column(length = 1024)
 	private String description;
 
-	private Boolean shouldDisplay = Boolean.TRUE;
+	private Boolean isPublic = Boolean.TRUE;
 
 	/**
 	 * Returns the project Id
@@ -82,7 +91,7 @@ public class Project implements IJPAEntity<Long>, Serializable {
 
 	/**
 	 * Returns the category
-	 * 
+	 *
 	 * @return the category
 	 */
 	public String getCategory() {
@@ -91,7 +100,7 @@ public class Project implements IJPAEntity<Long>, Serializable {
 
 	/**
 	 * Sets the category
-	 * 
+	 *
 	 * @param category
 	 *            the category
 	 */
@@ -176,22 +185,22 @@ public class Project implements IJPAEntity<Long>, Serializable {
 	}
 
 	/**
-	 * Returns the should display property
+	 * Returns the isPublic property
 	 *
-	 * @return the should display property
+	 * @return the isPublic property
 	 */
-	public Boolean getShouldDisplay() {
-		return shouldDisplay;
+	public Boolean getIsPublic() {
+		return isPublic;
 	}
 
 	/**
-	 * Sets the should display property
+	 * Sets the isPublic property
 	 *
-	 * @param shouldDisplay
-	 *            the should display property
+	 * @param isPublic
+	 *            the isPublic property
 	 */
-	public void setShouldDisplay(Boolean shouldDisplay) {
-		this.shouldDisplay = shouldDisplay;
+	public void setIsPublic(Boolean isPublic) {
+		this.isPublic = isPublic;
 	}
 
 	@Override

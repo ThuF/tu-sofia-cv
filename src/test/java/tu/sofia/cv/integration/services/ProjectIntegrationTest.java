@@ -169,6 +169,6 @@ public class ProjectIntegrationTest extends IntegrationTestSupport {
 		assertEquals("The [description] properties are not equals", expected.getDescription(), actual.getDescription());
 		assertEquals("The [url] properties are not equals", expected.getUrl(), actual.getUrl());
 		assertEquals("The [icon] properties are not equals", expected.getIcon(), actual.getIcon());
-		assertEquals("The [shouldDisplay] properties are not equals", expected.getShouldDisplay(), actual.getShouldDisplay());
+		assertEquals("The [shouldDisplay] properties are not equals", expected.getIsPublic(), actual.getIsPublic());
 	}
 }

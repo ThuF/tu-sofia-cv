@@ -31,6 +31,8 @@ public class ProjectService extends AbstractCRUDService<Long, Project> {
 
 	private static final String ERROR_THERE_IS_NO_SKILL_WITH_SKILL_ID_MESSAGE = "There is no project with [projectId={0}]";
 
+	private ProjectDao projectDao;
+
 	/**
 	 * Constructor
 	 *
@@ -41,6 +43,7 @@ public class ProjectService extends AbstractCRUDService<Long, Project> {
 	@Inject
 	public ProjectService(ProjectDao projectDao, ProjectValidator projectValidator, UnitOfWorkUtils unitOfWorkUtils) {
 		super(projectDao, projectValidator, unitOfWorkUtils);
+		this.projectDao = projectDao;
 	}
 
 	/**
@@ -52,6 +55,18 @@ public class ProjectService extends AbstractCRUDService<Long, Project> {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Project> getProjects() {
 		return getAll();
+	}
+
+	/**
+	 * Returns a list of all projects that should be displayed
+	 *
+	 * @return a list of all projects that should be displayed
+	 */
+	@GET
+	@Path("/public")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Project> getAllPublicProjects() {
+		return projectDao.findAllPublicProjects();
 	}
 
 	/**
@@ -108,6 +123,17 @@ public class ProjectService extends AbstractCRUDService<Long, Project> {
 		return delete(id);
 	}
 
+	/**
+	 * Returns the count of all projects
+	 * 
+	 * @return the count of all projects
+	 */
+	@GET
+	@Path("/count")
+	public Long count() {
+		return countAll();
+	}
+
 	@Override
 	protected String getNotFoundMessage(Long id) {
 		return MessageFormat.format(ERROR_THERE_IS_NO_SKILL_WITH_SKILL_ID_MESSAGE, id);
@@ -119,7 +145,7 @@ public class ProjectService extends AbstractCRUDService<Long, Project> {
 		persistedEntity.setDescription(entity.getDescription());
 		persistedEntity.setUrl(entity.getUrl());
 		persistedEntity.setIcon(entity.getIcon());
-		persistedEntity.setShouldDisplay(entity.getShouldDisplay());
+		persistedEntity.setIsPublic(entity.getIsPublic());
 	}
 
 }
