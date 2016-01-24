@@ -25,14 +25,20 @@ public class Project implements IJPAEntity<Long>, Serializable {
 	@Column(length = 150, nullable = false)
 	private String name;
 
-	@Column(length = 1024)
-	private String description;
+	@Column(length = 150)
+	private String category;
+
+	@Column(length = 512)
+	private String icon;
+
+	@Column(length = 512)
+	private String previewImage;
 
 	@Column(length = 512)
 	private String url;
 
-	@Column(length = 512)
-	private String icon;
+	@Column(length = 1024)
+	private String description;
 
 	private Boolean shouldDisplay = Boolean.TRUE;
 
@@ -75,22 +81,60 @@ public class Project implements IJPAEntity<Long>, Serializable {
 	}
 
 	/**
-	 * Returns the description
-	 *
-	 * @return the description
+	 * Returns the category
+	 * 
+	 * @return the category
 	 */
-	public String getDescription() {
-		return description;
+	public String getCategory() {
+		return category;
 	}
 
 	/**
-	 * Sets the description
-	 *
-	 * @param description
-	 *            the description
+	 * Sets the category
+	 * 
+	 * @param category
+	 *            the category
 	 */
-	public void setDescription(String description) {
-		this.description = description;
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	/**
+	 * Returns the icon
+	 *
+	 * @return the icon
+	 */
+	public String getIcon() {
+		return icon;
+	}
+
+	/**
+	 * Sets the icon
+	 *
+	 * @param icon
+	 *            the icon
+	 */
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	/**
+	 * Returns the preview image
+	 *
+	 * @return the preview image
+	 */
+	public String getPreviewImage() {
+		return previewImage;
+	}
+
+	/**
+	 * Sets the preview image
+	 *
+	 * @param previewImage
+	 *            the preview image
+	 */
+	public void setPreviewImage(String previewImage) {
+		this.previewImage = previewImage;
 	}
 
 	/**
@@ -113,22 +157,22 @@ public class Project implements IJPAEntity<Long>, Serializable {
 	}
 
 	/**
-	 * Returns the icon
+	 * Returns the description
 	 *
-	 * @return the icon
+	 * @return the description
 	 */
-	public String getIcon() {
-		return icon;
+	public String getDescription() {
+		return description;
 	}
 
 	/**
-	 * Sets the icon
+	 * Sets the description
 	 *
-	 * @param icon
-	 *            the icon
+	 * @param description
+	 *            the description
 	 */
-	public void setIcon(String icon) {
-		this.icon = icon;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
