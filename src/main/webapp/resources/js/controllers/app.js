@@ -15,15 +15,15 @@ app.controller('CVController', function($scope, $http) {
 	$scope.skillGroups = [{
 		'name': 'E-Commerce',
 		'highlight': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.',
-		'icon': 'fa fa-shopping-cart fa-stack-1x fa-inverse'
+		'icon': 'fa fa-shopping-cart'
 	}, {
 		'name': 'Responsive Design',
 		'highlight': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.',
-		'icon': 'fa fa-laptop fa-stack-1x fa-inverse'
+		'icon': 'fa fa-laptop'
 	}, {
 		'name': 'Web Security',
 		'highlight': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.',
-		'icon': 'fa fa-lock fa-stack-1x fa-inverse'
+		'icon': 'fa fa-lock'
 	}];
 
 	$scope.projects = [{
