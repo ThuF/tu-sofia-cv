@@ -46,6 +46,8 @@ public class Position implements IJPAEntity<Long>, Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 
+	private String icon;
+
 	@OneToOne
 	private Company company;
 
@@ -123,6 +125,25 @@ public class Position implements IJPAEntity<Long>, Serializable {
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	/**
+	 * Returns the icon
+	 * 
+	 * @return the icon
+	 */
+	public String getIcon() {
+		return icon;
+	}
+
+	/**
+	 * Sets the icon
+	 * 
+	 * @param icon
+	 *            the icon
+	 */
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	/**

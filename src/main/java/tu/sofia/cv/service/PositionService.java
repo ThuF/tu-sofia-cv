@@ -108,6 +108,17 @@ public class PositionService extends AbstractCRUDService<Long, Position> {
 		return delete(id);
 	}
 
+	/**
+	 * Returns the count of all positions
+	 * 
+	 * @return the count of all positions
+	 */
+	@GET
+	@Path("/count")
+	public Long count() {
+		return countAll();
+	}
+
 	@Override
 	protected String getNotFoundMessage(Long id) {
 		return MessageFormat.format(ERROR_THERE_IS_NO_SKILL_WITH_SKILL_ID_MESSAGE, id);

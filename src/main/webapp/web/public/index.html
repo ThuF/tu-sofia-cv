@@ -132,19 +132,19 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">About</h2>
-                    <h3 class="section-subheading text-muted">Total of {{timeline.length}} events</h3>
+                    <h3 class="section-subheading text-muted">Total of {{timelineCount}} events</h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="timeline">
-                        <li ng-repeat="next in timeline" ng-class="{'timeline-inverted': (next.type == 'project')}">
+                        <li ng-repeat="next in timeline" ng-class="{'timeline-inverted': (next.isEducation)}">
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive" ng-src="{{next.icon}}" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>{{next.endDate ? next.startDate + "-" + next.endDate : next.startDate}}</h4>
+                                    <h4>{{next.endDate ? next.startDate + " / " + next.endDate : next.startDate}}</h4>
                                     <h4 class="subheading">{{next.title}}</h4>
                                 </div>
                                 <div class="timeline-body">

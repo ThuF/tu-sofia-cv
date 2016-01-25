@@ -76,7 +76,7 @@ public class EducationService extends AbstractCRUDService<Long, Education> {
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addSkill(Education education) {
+	public Response addEducation(Education education) {
 		return add(education);
 	}
 
@@ -104,8 +104,19 @@ public class EducationService extends AbstractCRUDService<Long, Education> {
 	 */
 	@DELETE
 	@Path("/{id}")
-	public Response deleteSkill(@PathParam("id") final Long id) {
+	public Response deleteEducation(@PathParam("id") final Long id) {
 		return delete(id);
+	}
+
+	/**
+	 * Returns the count of all educations
+	 *
+	 * @return the count of all educations
+	 */
+	@GET
+	@Path("/count")
+	public Long count() {
+		return countAll();
 	}
 
 	@Override

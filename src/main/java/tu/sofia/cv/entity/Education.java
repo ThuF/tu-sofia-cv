@@ -42,6 +42,8 @@ public class Education implements IJPAEntity<Long>, Serializable {
 	@Column(nullable = false)
 	private Date endDate;
 
+	private String icon;
+
 	/**
 	 * Returns the education Id
 	 *
@@ -154,6 +156,25 @@ public class Education implements IJPAEntity<Long>, Serializable {
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	/**
+	 * Returns the icon
+	 * 
+	 * @return the icon
+	 */
+	public String getIcon() {
+		return icon;
+	}
+
+	/**
+	 * Sets the icon
+	 * 
+	 * @param icon
+	 *            the icon
+	 */
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	@Override
