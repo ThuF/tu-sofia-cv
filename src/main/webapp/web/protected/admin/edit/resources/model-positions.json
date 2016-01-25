@@ -1,0 +1,15 @@
+[
+	{
+		"id": "userId",
+		"name": "User Id"
+	}, {
+		"id": "firstName",
+		"name": "First Name"
+	}, {
+		"id": "lastName",
+		"name": "Last Name"
+	}, {
+		"id": "email",
+		"name": "E-mail"
+	}
+]

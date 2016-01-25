@@ -1,0 +1,12 @@
+<div class="container">
+	<div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
+	<div class="form-group" ng-repeat="field in model">
+        <label class="control-label">{{field.name}}</label>
+        <input ng-type="filed.type" class="form-control" ng-model="data[field.id]" placeholder="{{field.name}}" ng-readonly="field.readonly || readonly"/>
+      </div>
+      <div class="btn-group">
+		<input class="btn btn-default" type="button" value="Edit" ng-click="setReadonly(false)" ng-disabled="errorMessage" ng-show="readonly">
+		<input class="btn btn-primary" type="button" value="Save" ng-hide="readonly" ng-click="saveChanges()"> 
+		<input class="btn btn-default" type="button" value="Cancel" ng-hide="readonly" ng-click="cancelChanges()">
+	</div>
+</div>

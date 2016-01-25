@@ -1,0 +1,22 @@
+[
+	{
+		"id": "firstName",
+		"name": "First Name"
+	}, {
+		"id": "lastName",
+		"name": "Last Name"
+	}, {
+		"id": "headline",
+		"name": "Headline",
+		"textarea": true
+	}, {
+		"id": "facebookProfileUrl",
+		"name": "Facebook"
+	}, {
+		"id": "twitterProfileUrl",
+		"name": "Twitter"
+	}, {
+		"id": "linkedinProfileUrl",
+		"name": "LinkedIn"
+	}
+]

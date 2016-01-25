@@ -1,0 +1,45 @@
+<div class="container">
+	<div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th ng-repeat='field in model' ng-if="!field.optional">{{field.name}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="selected-{{entry._selected_}}" ng-repeat="entry in data" ng-click="showInfoForEntry(entry)">
+				<td ng-repeat='field in model' ng-if="!field.optional">{{entry[field.id]}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<hr>
+	<br>
+	<div class="btn-group">
+		<input class="btn btn-default" type="button" value="New" ng-click="setOperation('new')" ng-disabled="errorMessage || operation == 'update'">
+		<input class="btn btn-default" type="button" value="Edit" ng-click="setOperation('update')" ng-disabled="errorMessage || operation == 'new'">
+		<input class="btn btn-default" type="button" value="Delete" ng-click="delete()" ng-disabled="errorMessage || operation == 'new' || operation == 'update'">
+	</div>
+	<br>
+	<br>
+	<div ng-repeat="field in model">
+		<div ng-show="operation == 'new'">
+			<label>{{field.name}}</label>
+			<input type="text" class="form-control" ng-show="field.readOnly" value="Auto Generated" readonly>
+			<input type="text" class="form-control" ng-model="newEntry[field.id]" ng-hide="field.readOnly || field.dropdown || field.textarea">
+			<select class="form-control" ng-model="newEntry[field.id]" ng-options="option.value as option.label for option in field.dropdown" ng-show="field.dropdown"></select>
+			<textarea class="form-control" ng-model="newEntry[field.id]" ng-show="field.textarea" rows="5"></textarea>
+			<br>
+		</div>
+		<div ng-show="operation == 'update'">
+			<label>{{field.name}}</label>
+			<input type="text" class="form-control" ng-model="selectedEntry[field.id]" ng-readonly="field.readOnly" ng-hide="field.dropdown || field.textarea">
+			<select class="form-control" ng-model="selectedEntry[field.id]" ng-options="option.value as option.label for option in field.dropdown" ng-show="field.dropdown"></select>
+			<textarea class="form-control" ng-model="selectedEntry[field.id]" ng-show="field.textarea" rows="5"></textarea>
+			<br>
+		</div>
+	</div>
+	<div class="btn-group">
+		<input class="btn btn-primary" type="button" value="Save" ng-show="operation == 'new' || operation == 'update'" ng-click="confirmAction()"> 
+		<input class="btn btn-default" type="button" value="Cancel" ng-show="operation == 'new' || operation == 'update'" ng-click="cancelAction()">
+	</div>
+</div>

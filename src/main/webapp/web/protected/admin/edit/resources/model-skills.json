@@ -1,0 +1,13 @@
+[
+	{
+		"id": "skillId",
+		"name": "Skill Id",
+		"readOnly": true
+	}, {
+		"id": "name",
+		"name": "Name"
+	}, {
+		"id": "isPublic",
+		"name": "Public"
+	}
+]

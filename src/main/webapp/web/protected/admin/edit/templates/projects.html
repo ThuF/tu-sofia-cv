@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th ng-repeat='field in model' ng-if="!field.optional">{{field.name}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="selected-{{entry._selected_}}" ng-repeat="entry in data" ng-click="showInfoForEntry(entry)">
+				<td ng-repeat='field in model' ng-if="!field.optional">{{entry[field.id]}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<hr>
+</div>
