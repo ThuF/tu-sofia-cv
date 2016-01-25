@@ -35,7 +35,10 @@ public abstract class AbstractCRUDService<Key, Entity extends IJPAEntity<Key>> {
 	protected abstract void updateEntityProperties(Entity persistedEntity, Entity entity);
 
 	protected List<Entity> getAll() {
-		return dao.findAll();
+		unitOfWorkUtils.begin();
+		List<Entity> all = dao.findAll();
+		unitOfWorkUtils.end();
+		return all;
 	}
 
 	protected Entity get(Key id) {
