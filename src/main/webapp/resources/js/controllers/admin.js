@@ -24,6 +24,21 @@ function getAction(oldAction, newAction, selectedEntry) {
 		return action;
 }
 
+function getEntryInfo(data, operation, currentEntry, selectedEntry) {
+	var entry = undefined;
+	if (!operation) {
+		if (currentEntry !== selectedEntry) {
+			for(var i = 0 ; i < data.length; i ++){
+				data[i]._selected_ = false;
+			}
+			entry = currentEntry;
+		} else {
+			entry = null;
+		}
+	}
+	return entry;
+}
+
 var cvApp = angular.module('cv', ['ngRoute']);
 
 cvApp.config(function($routeProvider){
@@ -135,20 +150,12 @@ cvApp.config(function($routeProvider){
     $scope.errorMessage = null;
 
     $scope.showInfoForEntry = function(entry) {
-		if (!$scope.operation) {
-			if($scope.selectedEntry === entry){
-				$scope.showEntry = false;
-				$scope.selectedEntry = null;
-				entry._selected_ = false;
-			} else {
-				for(var i = 0 ; i < $scope.data.length; i ++){
-					$scope.data[i]._selected_ = false;
-				}
-				entry._selected_ = true;
-				$scope.showEntry = true;
-				$scope.selectedEntry = entry;
-			}
-		}
+    	var result = getEntryInfo($scope.data, $scope.operation, entry, $scope.selectedEntry);
+    	if(result !== undefined) {
+    		$scope.selectedEntry = result;
+    		$scope.showEntry = result !== null;
+			entry._selected_ = result !== null;
+    	}
 	};
 
 	$scope.setOperation = function(operation) {
