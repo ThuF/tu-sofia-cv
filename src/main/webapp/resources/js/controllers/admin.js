@@ -94,6 +94,154 @@ cvApp.config(function($routeProvider){
 	}
 
 }).controller('SkillsController', function($scope, $http) {
+	var API = '../../../../api/v1/protected/admin/skills';
+
+	$http.get('resources/model-skills.json').success(function(data) {
+		$scope.model = data;
+	});
+
+	$http.get(API).success(function(data){
+		$scope.data = data;
+	});
+
+	$scope.selectedEntry;
+    $scope.newEntry = createEmptyEntry(); 
+    $scope.errorMessage = null;
+
+    $scope.showInfoForEntry = function(entry) {
+		if (!$scope.operation) {
+			if($scope.selectedEntry === entry){
+				$scope.showEntry = false;
+				$scope.selectedEntry = null;
+				entry._selected_ = false;
+			} else {
+				for(var i = 0 ; i < $scope.data.length; i ++){
+					$scope.data[i]._selected_ = false;
+				}
+				entry._selected_ = true;
+				$scope.showEntry = true;
+				$scope.selectedEntry = entry;
+			}
+		}
+	};
+
+	$scope.setOperation = function(operation) {
+		switch (operation) {
+			case 'new':
+				if ($scope.operation !== 'new') {
+					$scope.operation = 'new';
+				} else {
+					$scope.operation = null;
+				}
+				break;
+			case 'update':
+				if ($scope.operation !== 'update') {
+					if ($scope.selectedEntry) {
+						$scope.operation = 'update';
+					} else {
+						alert("Please first select entry for updated");
+						$scope.operation = null;
+					}
+				} else {
+					$scope.operation = null;
+				}
+				break;
+			case 'delete':
+				if ($scope.operation !== 'delete') {
+					$scope.operation = 'delete';
+				} else {
+					$scope.operation = null;
+				}
+				break;
+			default:
+				$scope.operation = null;
+				break;
+		}
+    };
+           
+    $scope.confirmAction = function() {
+        switch ($scope.operation) {
+            case 'new':
+                newEntry($scope.newEntry);
+                break;
+            case 'update':
+                updateEntry($scope.selectedEntry);
+                break;
+        }
+    };
+
+    $scope.cancelAction = function() {
+        refreshData();
+    };
+
+   $scope.delete = function() {
+	   if ($scope.selectedEntry) {
+         	var confirmed = confirm('Do you realy want to delete the selected entry?');
+           	if (confirmed) {
+               	delete $scope.selectedEntry._selected_;
+                   deleteEntry($scope.selectedEntry);
+                   $scope.operation = null;
+           	}                    	
+       } else {
+           alert('Please select row from the table.');
+       }
+   };
+            
+	function newEntry(entry) {
+		delete $scope.newEntry._selected_;
+		$http.post(API, entry).success(function() {
+			refreshData();
+			$scope.selectedEntry = null;
+            $scope.operation = null;
+            $scope.newEntry = createEmptyEntry();
+            $scope.errorMessage = null;
+		}).error(function(response) {
+			$scope.errorMessage = response.message;
+		});
+	}
+	
+	function updateEntry(entry) {
+		delete $scope.selectedEntry._selected_;
+		$http.put(API + '/' + entry.skillId, entry).success(function() {
+			refreshData();
+            $scope.operation = null;
+            $scope.errorMessage = null;
+		}).error(function(response) {
+			$scope.errorMessage = response.message;
+		});
+	}
+
+	function deleteEntry(entry) {
+		var deleteUrl = API + "/" + entry["skillId"];
+		$http.delete(deleteUrl).success(function(){
+			refreshData();
+            $scope.selectedEntry = null;
+			$scope.errorMessage = null;
+		}).error(function(response){
+			$scope.errorMessage = response.message;
+		});
+	}
+            
+	function refreshData() {
+		$http.get(API).success(function(data){
+			$scope.data = data;
+        	$scope.newEntry = createEmptyEntry();
+            $scope.selectedEntry = null;
+            $scope.operation = null;
+            $scope.errorMessage = null;
+		}).error(function(response){
+			$scope.errorMessage = response.message;
+		});
+	}
+
+    function createEmptyEntry() {
+    	return {
+    		'skillId': null,
+    		'name': null,
+    		'isPublic': null
+    	}
+    }
+
 }).controller('ProjectsController', function($scope, $http) {
 }).controller('PositionsController', function($scope, $http) {
 }).controller('EducationsController', function($scope, $http) {

@@ -144,6 +144,7 @@ public class SkillService extends AbstractCRUDService<Long, Skill> {
 	@Override
 	protected void updateEntityProperties(Skill persistedEntity, Skill entity) {
 		persistedEntity.setName(entity.getName());
+		persistedEntity.setType(entity.getType());
 	}
 
 }

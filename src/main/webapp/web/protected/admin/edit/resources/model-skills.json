@@ -7,7 +7,20 @@
 		"id": "name",
 		"name": "Name"
 	}, {
-		"id": "isPublic",
-		"name": "Public"
+		"id": "type",
+		"name": "Type",
+		"dropdown": [{
+			"label": "Technical Skill",
+			"value": "TECHNICAL_SKILL"
+		}, {
+			"label": "Soft Skill",
+			"value": "SOFT_SKILL"
+		}, {
+			"label": "Other",
+			"value": "OTHER"
+		}, {
+			"label": "Hobby",
+			"value": "HOBBY"
+		}]
 	}
 ]
