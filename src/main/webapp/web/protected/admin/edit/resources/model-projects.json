@@ -1,15 +1,30 @@
 [
 	{
-		"id": "userId",
-		"name": "User Id"
+		"id": "projectId",
+		"name": "Project Id",
+		"readOnly": true
 	}, {
-		"id": "firstName",
-		"name": "First Name"
+		"id": "name",
+		"name": "Name"
 	}, {
-		"id": "lastName",
-		"name": "Last Name"
+		"id": "category",
+		"name": "Category"
 	}, {
-		"id": "email",
-		"name": "E-mail"
+		"id": "icon",
+		"name": "Icon",
+		"optional": true
+	}, {
+		"id": "previewImage",
+		"name": "Preview Image",
+		"optional": true
+	}, {
+		"id": "url",
+		"name": "URL",
+		"optional": true
+	}, {
+		"id": "description",
+		"name": "Description",
+		"textarea": true,
+		"optional": true
 	}
 ]

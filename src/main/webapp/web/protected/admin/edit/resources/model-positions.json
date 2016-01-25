@@ -1,15 +1,20 @@
 [
 	{
-		"id": "userId",
-		"name": "User Id"
+		"id": "positionId",
+		"name": "Position Id",
+		"readOnly": true
 	}, {
-		"id": "firstName",
-		"name": "First Name"
+		"id": "title",
+		"name": "Title"
 	}, {
-		"id": "lastName",
-		"name": "Last Name"
+		"id": "startDate",
+		"name": "Start Date"
 	}, {
-		"id": "email",
-		"name": "E-mail"
+		"id": "endDate",
+		"name": "End Date"
+	}, {
+		"id": "icon",
+		"name": "Icon",
+		"optional": true
 	}
 ]

@@ -1,15 +1,27 @@
 [
 	{
-		"id": "userId",
-		"name": "User Id"
+		"id": "educationId",
+		"name": "Education Id",
+		"readOnly": true
 	}, {
-		"id": "firstName",
-		"name": "First Name"
+		"id": "degree",
+		"name": "Degree"
 	}, {
-		"id": "lastName",
-		"name": "Last Name"
+		"id": "schoolName",
+		"name": "School Name"
 	}, {
-		"id": "email",
-		"name": "E-mail"
+		"id": "fieldOfStudy",
+		"name": "Field Of Study",
+		"optional": true
+	}, {
+		"id": "startDate",
+		"name": "Start Date"
+	}, {
+		"id": "endDate",
+		"name": "End Date"
+	}, {
+		"id": "icon",
+		"name": "Icon",
+		"optional": true
 	}
 ]

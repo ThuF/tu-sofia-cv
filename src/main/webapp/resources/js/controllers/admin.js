@@ -135,9 +135,11 @@ cvApp.config(function($routeProvider){
 	}
 
 }).controller('SkillsController', function($scope, $http) {
-	var API = '../../../../api/v1/protected/admin/skills';
+	const PRIMARY_KEY_NAME = 'skillId';
+	const API = '../../../../api/v1/protected/admin/skills';
+	const API_MODEL = 'resources/model-skills.json';
 
-	$http.get('resources/model-skills.json').success(function(data) {
+	$http.get(API_MODEL).success(function(data) {
 		$scope.model = data;
 	});
 
@@ -205,7 +207,7 @@ cvApp.config(function($routeProvider){
 	
 	function updateEntry(entry) {
 		delete $scope.selectedEntry._selected_;
-		$http.put(API + '/' + entry.skillId, entry).success(function() {
+		$http.put(API + '/' + entry[PRIMARY_KEY_NAME], entry).success(function() {
 			refreshData();
             $scope.operation = null;
             $scope.errorMessage = null;
@@ -215,7 +217,7 @@ cvApp.config(function($routeProvider){
 	}
 
 	function deleteEntry(entry) {
-		var deleteUrl = API + "/" + entry["skillId"];
+		var deleteUrl = API + "/" + entry[PRIMARY_KEY_NAME];
 		$http.delete(deleteUrl).success(function(){
 			refreshData();
             $scope.selectedEntry = null;
@@ -244,10 +246,336 @@ cvApp.config(function($routeProvider){
     		'type': 'OTHER'
     	}
     }
-
 }).controller('ProjectsController', function($scope, $http) {
+	const PRIMARY_KEY_NAME = "projectId";
+	const API = '../../../../api/v1/protected/admin/projects';
+	const API_MODEL = 'resources/model-projects.json';
+
+	$http.get(API_MODEL).success(function(data) {
+		$scope.model = data;
+	});
+
+	$http.get(API).success(function(data){
+		$scope.data = data;
+	});
+
+	$scope.selectedEntry;
+    $scope.newEntry = createEmptyEntry(); 
+    $scope.errorMessage = null;
+
+    $scope.showInfoForEntry = function(entry) {
+    	var result = getEntryInfo($scope.data, $scope.operation, entry, $scope.selectedEntry);
+    	if(result !== undefined) {
+    		$scope.selectedEntry = result;
+    		$scope.showEntry = result !== null;
+			entry._selected_ = result !== null;
+    	}
+	};
+
+	$scope.setOperation = function(operation) {
+		$scope.operation = getAction($scope.operation, operation, $scope.selectedEntry);
+    };
+           
+    $scope.confirmAction = function() {
+        switch ($scope.operation) {
+            case 'new':
+                newEntry($scope.newEntry);
+                break;
+            case 'update':
+                updateEntry($scope.selectedEntry);
+                break;
+        }
+    };
+
+    $scope.cancelAction = function() {
+        refreshData();
+    };
+
+   $scope.delete = function() {
+	   if ($scope.selectedEntry) {
+         	var confirmed = confirm('Do you realy want to delete the selected entry?');
+           	if (confirmed) {
+               	delete $scope.selectedEntry._selected_;
+                   deleteEntry($scope.selectedEntry);
+                   $scope.operation = null;
+           	}                    	
+       } else {
+           alert('Please select row from the table.');
+       }
+   };
+            
+	function newEntry(entry) {
+		delete $scope.newEntry._selected_;
+		$http.post(API, entry).success(function() {
+			refreshData();
+			$scope.selectedEntry = null;
+            $scope.operation = null;
+            $scope.newEntry = createEmptyEntry();
+            $scope.errorMessage = null;
+		}).error(function(response) {
+			$scope.errorMessage = response.message;
+		});
+	}
+	
+	function updateEntry(entry) {
+		delete $scope.selectedEntry._selected_;
+		$http.put(API + '/' + entry[PRIMARY_KEY_NAME], entry).success(function() {
+			refreshData();
+            $scope.operation = null;
+            $scope.errorMessage = null;
+		}).error(function(response) {
+			$scope.errorMessage = response.message;
+		});
+	}
+
+	function deleteEntry(entry) {
+		var deleteUrl = API + "/" + entry[PRIMARY_KEY_NAME];
+		$http.delete(deleteUrl).success(function(){
+			refreshData();
+            $scope.selectedEntry = null;
+			$scope.errorMessage = null;
+		}).error(function(response){
+			$scope.errorMessage = response.message;
+		});
+	}
+            
+	function refreshData() {
+		$http.get(API).success(function(data){
+			$scope.data = data;
+        	$scope.newEntry = createEmptyEntry();
+            $scope.selectedEntry = null;
+            $scope.operation = null;
+            $scope.errorMessage = null;
+		}).error(function(response){
+			$scope.errorMessage = response.message;
+		});
+	}
+
+    function createEmptyEntry() {
+    	return {
+    		'projectId': null
+    	}
+    }
 }).controller('PositionsController', function($scope, $http) {
+	const PRIMARY_KEY_NAME = "positionId";
+	const API = '../../../../api/v1/protected/admin/positions';
+	const API_MODEL = 'resources/model-positions.json';
+
+	$http.get(API_MODEL).success(function(data) {
+		$scope.model = data;
+	});
+
+	$http.get(API).success(function(data){
+		$scope.data = data;
+	});
+
+	$scope.selectedEntry;
+    $scope.newEntry = createEmptyEntry(); 
+    $scope.errorMessage = null;
+
+    $scope.showInfoForEntry = function(entry) {
+    	var result = getEntryInfo($scope.data, $scope.operation, entry, $scope.selectedEntry);
+    	if(result !== undefined) {
+    		$scope.selectedEntry = result;
+    		$scope.showEntry = result !== null;
+			entry._selected_ = result !== null;
+    	}
+	};
+
+	$scope.setOperation = function(operation) {
+		$scope.operation = getAction($scope.operation, operation, $scope.selectedEntry);
+    };
+           
+    $scope.confirmAction = function() {
+        switch ($scope.operation) {
+            case 'new':
+                newEntry($scope.newEntry);
+                break;
+            case 'update':
+                updateEntry($scope.selectedEntry);
+                break;
+        }
+    };
+
+    $scope.cancelAction = function() {
+        refreshData();
+    };
+
+   $scope.delete = function() {
+	   if ($scope.selectedEntry) {
+         	var confirmed = confirm('Do you realy want to delete the selected entry?');
+           	if (confirmed) {
+               	delete $scope.selectedEntry._selected_;
+                   deleteEntry($scope.selectedEntry);
+                   $scope.operation = null;
+           	}                    	
+       } else {
+           alert('Please select row from the table.');
+       }
+   };
+            
+	function newEntry(entry) {
+		delete $scope.newEntry._selected_;
+		$http.post(API, entry).success(function() {
+			refreshData();
+			$scope.selectedEntry = null;
+            $scope.operation = null;
+            $scope.newEntry = createEmptyEntry();
+            $scope.errorMessage = null;
+		}).error(function(response) {
+			$scope.errorMessage = response.message;
+		});
+	}
+	
+	function updateEntry(entry) {
+		delete $scope.selectedEntry._selected_;
+		$http.put(API + '/' + entry[PRIMARY_KEY_NAME], entry).success(function() {
+			refreshData();
+            $scope.operation = null;
+            $scope.errorMessage = null;
+		}).error(function(response) {
+			$scope.errorMessage = response.message;
+		});
+	}
+
+	function deleteEntry(entry) {
+		var deleteUrl = API + "/" + entry[PRIMARY_KEY_NAME];
+		$http.delete(deleteUrl).success(function(){
+			refreshData();
+            $scope.selectedEntry = null;
+			$scope.errorMessage = null;
+		}).error(function(response){
+			$scope.errorMessage = response.message;
+		});
+	}
+            
+	function refreshData() {
+		$http.get(API).success(function(data){
+			$scope.data = data;
+        	$scope.newEntry = createEmptyEntry();
+            $scope.selectedEntry = null;
+            $scope.operation = null;
+            $scope.errorMessage = null;
+		}).error(function(response){
+			$scope.errorMessage = response.message;
+		});
+	}
+
+    function createEmptyEntry() {
+    	return {
+    		'positionId': null
+    	}
+    }
 }).controller('EducationsController', function($scope, $http) {
+	const PRIMARY_KEY_NAME = "educationId";
+	const API = '../../../../api/v1/protected/admin/educations';
+	const API_MODEL = 'resources/model-educations.json';
+
+	$http.get(API_MODEL).success(function(data) {
+		$scope.model = data;
+	});
+
+	$http.get(API).success(function(data){
+		$scope.data = data;
+	});
+
+	$scope.selectedEntry;
+    $scope.newEntry = createEmptyEntry(); 
+    $scope.errorMessage = null;
+
+    $scope.showInfoForEntry = function(entry) {
+    	var result = getEntryInfo($scope.data, $scope.operation, entry, $scope.selectedEntry);
+    	if(result !== undefined) {
+    		$scope.selectedEntry = result;
+    		$scope.showEntry = result !== null;
+			entry._selected_ = result !== null;
+    	}
+	};
+
+	$scope.setOperation = function(operation) {
+		$scope.operation = getAction($scope.operation, operation, $scope.selectedEntry);
+    };
+           
+    $scope.confirmAction = function() {
+        switch ($scope.operation) {
+            case 'new':
+                newEntry($scope.newEntry);
+                break;
+            case 'update':
+                updateEntry($scope.selectedEntry);
+                break;
+        }
+    };
+
+    $scope.cancelAction = function() {
+        refreshData();
+    };
+
+   $scope.delete = function() {
+	   if ($scope.selectedEntry) {
+         	var confirmed = confirm('Do you realy want to delete the selected entry?');
+           	if (confirmed) {
+               	delete $scope.selectedEntry._selected_;
+                   deleteEntry($scope.selectedEntry);
+                   $scope.operation = null;
+           	}                    	
+       } else {
+           alert('Please select row from the table.');
+       }
+   };
+            
+	function newEntry(entry) {
+		delete $scope.newEntry._selected_;
+		$http.post(API, entry).success(function() {
+			refreshData();
+			$scope.selectedEntry = null;
+            $scope.operation = null;
+            $scope.newEntry = createEmptyEntry();
+            $scope.errorMessage = null;
+		}).error(function(response) {
+			$scope.errorMessage = response.message;
+		});
+	}
+	
+	function updateEntry(entry) {
+		delete $scope.selectedEntry._selected_;
+		$http.put(API + '/' + entry[PRIMARY_KEY_NAME], entry).success(function() {
+			refreshData();
+            $scope.operation = null;
+            $scope.errorMessage = null;
+		}).error(function(response) {
+			$scope.errorMessage = response.message;
+		});
+	}
+
+	function deleteEntry(entry) {
+		var deleteUrl = API + "/" + entry[PRIMARY_KEY_NAME];
+		$http.delete(deleteUrl).success(function(){
+			refreshData();
+            $scope.selectedEntry = null;
+			$scope.errorMessage = null;
+		}).error(function(response){
+			$scope.errorMessage = response.message;
+		});
+	}
+            
+	function refreshData() {
+		$http.get(API).success(function(data){
+			$scope.data = data;
+        	$scope.newEntry = createEmptyEntry();
+            $scope.selectedEntry = null;
+            $scope.operation = null;
+            $scope.errorMessage = null;
+		}).error(function(response){
+			$scope.errorMessage = response.message;
+		});
+	}
+
+    function createEmptyEntry() {
+    	return {
+    		'educationId': null
+    	}
+    }
 }).controller('MenuController', function($scope, $http) {
 	$http.get('resources/menu.json').success(function(data) {
 		$scope.menus = data;
