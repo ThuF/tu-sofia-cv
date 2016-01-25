@@ -1,3 +1,29 @@
+function getAction(oldAction, newAction, selectedEntry) {
+	var action = null;
+	switch (newAction) {
+			case 'new':
+				if (oldAction !== 'new') {
+					action = 'new';
+				}
+				break;
+			case 'update':
+				if (oldAction !== 'update') {
+					if (selectedEntry) {
+						action = 'update';
+					} else {
+						alert("Please first select entry for updated");
+					}
+				}
+				break;
+			case 'delete':
+				if (oldAction !== 'delete') {
+					action = 'delete';
+				}
+				break;
+		}
+		return action;
+}
+
 var cvApp = angular.module('cv', ['ngRoute']);
 
 cvApp.config(function($routeProvider){
@@ -126,37 +152,7 @@ cvApp.config(function($routeProvider){
 	};
 
 	$scope.setOperation = function(operation) {
-		switch (operation) {
-			case 'new':
-				if ($scope.operation !== 'new') {
-					$scope.operation = 'new';
-				} else {
-					$scope.operation = null;
-				}
-				break;
-			case 'update':
-				if ($scope.operation !== 'update') {
-					if ($scope.selectedEntry) {
-						$scope.operation = 'update';
-					} else {
-						alert("Please first select entry for updated");
-						$scope.operation = null;
-					}
-				} else {
-					$scope.operation = null;
-				}
-				break;
-			case 'delete':
-				if ($scope.operation !== 'delete') {
-					$scope.operation = 'delete';
-				} else {
-					$scope.operation = null;
-				}
-				break;
-			default:
-				$scope.operation = null;
-				break;
-		}
+		$scope.operation = getAction($scope.operation, operation, $scope.selectedEntry);
     };
            
     $scope.confirmAction = function() {
