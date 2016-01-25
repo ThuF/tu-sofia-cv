@@ -241,7 +241,7 @@ cvApp.config(function($routeProvider){
     	return {
     		'skillId': null,
     		'name': null,
-    		'isPublic': null
+    		'type': 'OTHER'
     	}
     }
 
