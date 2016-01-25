@@ -131,6 +131,7 @@ public class EducationService extends AbstractCRUDService<Long, Education> {
 		persistedEntity.setFieldOfStudy(entity.getFieldOfStudy());
 		persistedEntity.setStartDate(entity.getStartDate());
 		persistedEntity.setEndDate(entity.getEndDate());
+		persistedEntity.setIcon(entity.getIcon());
 	}
 
 }

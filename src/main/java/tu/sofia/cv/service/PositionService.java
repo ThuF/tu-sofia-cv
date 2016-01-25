@@ -110,7 +110,7 @@ public class PositionService extends AbstractCRUDService<Long, Position> {
 
 	/**
 	 * Returns the count of all positions
-	 * 
+	 *
 	 * @return the count of all positions
 	 */
 	@GET
@@ -130,6 +130,7 @@ public class PositionService extends AbstractCRUDService<Long, Position> {
 		persistedEntity.setStartDate(entity.getStartDate());
 		persistedEntity.setEndDate(entity.getEndDate());
 		persistedEntity.setCompany(entity.getCompany());
+		persistedEntity.setIcon(entity.getIcon());
 	}
 
 }

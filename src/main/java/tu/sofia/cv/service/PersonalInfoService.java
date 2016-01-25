@@ -146,6 +146,9 @@ public class PersonalInfoService {
 		persistedPersonalInfo.setFirstName(personalInfo.getFirstName());
 		persistedPersonalInfo.setLastName(personalInfo.getLastName());
 		persistedPersonalInfo.setHeadline(personalInfo.getHeadline());
+		persistedPersonalInfo.setFacebookProfileUrl(personalInfo.getFacebookProfileUrl());
+		persistedPersonalInfo.setTwitterProfileUrl(personalInfo.getTwitterProfileUrl());
+		persistedPersonalInfo.setLinkedinProfileUrl(personalInfo.getLinkedinProfileUrl());
 	}
 
 }
