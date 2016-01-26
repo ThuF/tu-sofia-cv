@@ -9,11 +9,14 @@
     	"name": "Projects",
     	"link": "#/projects"
 	}, {
+    	"name": "Educations",
+    	"link": "#/educations"
+	}, {
     	"name": "Positions",
     	"link": "#/positions"
 	}, {
-    	"name": "Educations",
-    	"link": "#/educations"
+    	"name": "Companies",
+    	"link": "#/companies"
 	}, {
     	"name": "View CV",
     	"link": "../../../../"

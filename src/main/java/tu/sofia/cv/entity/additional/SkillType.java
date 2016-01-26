@@ -13,7 +13,7 @@ public enum SkillType {
 	/**
 	 * The soft skill type
 	 */
-	SOFT_SKILL("Soft Skills", "fa fa-commenting-o"),
+	SOFT_SKILL("Soft Skills", "fa fa-comments"),
 
 	/**
 	 * Others type

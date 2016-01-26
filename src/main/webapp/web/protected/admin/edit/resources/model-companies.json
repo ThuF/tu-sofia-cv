@@ -1,0 +1,27 @@
+[
+	{
+		"id": "educationId",
+		"name": "Education Id",
+		"readOnly": true
+	}, {
+		"id": "degree",
+		"name": "Degree"
+	}, {
+		"id": "schoolName",
+		"name": "School Name"
+	}, {
+		"id": "fieldOfStudy",
+		"name": "Field Of Study",
+		"optional": true
+	}, {
+		"id": "startDate",
+		"name": "Start Date"
+	}, {
+		"id": "endDate",
+		"name": "End Date"
+	}, {
+		"id": "icon",
+		"name": "Icon",
+		"optional": true
+	}
+]
