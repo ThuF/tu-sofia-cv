@@ -473,9 +473,24 @@ cvApp.config(function($routeProvider){
 	const PRIMARY_KEY_NAME = "positionId";
 	const API = '../../../../api/v1/protected/admin/positions';
 	const API_MODEL = 'resources/model-positions.json';
+	const API_COMPANIES = '../../../../api/v1/protected/admin/companies';
 
 	$http.get(API_MODEL).success(function(data) {
 		$scope.model = data;
+		$http.get(API_COMPANIES).success(function(data) {
+			$scope.model.push({
+					"id": "company",
+					"name": "Company",
+					"dropdown": []
+			});
+			for (var i = 0 ; i < data.length; i ++) {
+				var company = data[i];
+				$scope.model[5].dropdown.push({
+					"label": company.name,
+					"value": company
+				})
+			}
+		});
 	});
 
 	$http.get(API).success(function(data){

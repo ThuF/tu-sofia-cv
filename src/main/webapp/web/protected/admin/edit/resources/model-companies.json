@@ -1,27 +1,14 @@
 [
 	{
-		"id": "educationId",
-		"name": "Education Id",
+		"id": "companyId",
+		"name": "Company Id",
 		"readOnly": true
 	}, {
-		"id": "degree",
-		"name": "Degree"
+		"id": "name",
+		"name": "Name"
 	}, {
-		"id": "schoolName",
-		"name": "School Name"
-	}, {
-		"id": "fieldOfStudy",
-		"name": "Field Of Study",
-		"optional": true
-	}, {
-		"id": "startDate",
-		"name": "Start Date"
-	}, {
-		"id": "endDate",
-		"name": "End Date"
-	}, {
-		"id": "icon",
-		"name": "Icon",
+		"id": "size",
+		"name": "Size",
 		"optional": true
 	}
 ]
