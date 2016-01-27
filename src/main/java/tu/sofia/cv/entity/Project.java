@@ -11,6 +11,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import tu.sofia.cv.entity.additional.GitHubRepo;
+
 /**
  * Entity class representing the T_PROJECT database table
  */
@@ -18,6 +20,8 @@ import javax.persistence.Table;
 @Table(name = "T_PROJECT")
 @NamedQueries({ @NamedQuery(name = Project.QUERY_NAME_FIND_ALL_PUBLIC_PROJECTS, query = Project.QUERY_FIND_ALL_PUBLIC_PROJECTS) })
 public class Project implements IJPAEntity<Long>, Serializable {
+
+	private static final String CATEGORY_GITHUB_PROJECT = "GitHub project";
 
 	private static final long serialVersionUID = -8781817666319382716L;
 
@@ -50,6 +54,26 @@ public class Project implements IJPAEntity<Long>, Serializable {
 	private String description;
 
 	private Boolean isPublic = Boolean.TRUE;
+
+	/**
+	 * Constructor
+	 */
+	public Project() {
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param repo
+	 */
+	public Project(GitHubRepo repo) {
+		setName(repo.getName());
+		setCategory(CATEGORY_GITHUB_PROJECT);
+		if (repo.getOwner() != null) {
+			setIcon(repo.getOwner().getAvatarUrl());
+		}
+		setUrl(repo.getUrl());
+	}
 
 	/**
 	 * Returns the project Id

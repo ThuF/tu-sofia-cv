@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import tu.sofia.cv.entity.additional.LinkedInPositions.LinkedInPositionsWrapper.LinkedInCompany;
+
 /**
  * Entity class representing the T_COMPANY database table
  */
@@ -25,7 +27,25 @@ public class Company implements IJPAEntity<Long>, Serializable {
 	@Column(length = 150, nullable = false)
 	private String name;
 
-	private Integer size;
+	@Column(length = 150)
+	private String size;
+
+	/**
+	 * Constructor
+	 */
+	public Company() {
+
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param company
+	 */
+	public Company(LinkedInCompany company) {
+		setName(company.getName());
+		setSize(company.getSize());
+	}
 
 	/**
 	 * Returns the company Id
@@ -70,7 +90,7 @@ public class Company implements IJPAEntity<Long>, Serializable {
 	 *
 	 * @return the size
 	 */
-	public Integer getSize() {
+	public String getSize() {
 		return size;
 	}
 
@@ -80,7 +100,7 @@ public class Company implements IJPAEntity<Long>, Serializable {
 	 * @param size
 	 *            the size
 	 */
-	public void setSize(Integer size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 

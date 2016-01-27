@@ -259,9 +259,17 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>${apache.commons.lang}</version>
+			<version>${apache.commons.lang.version}</version>
 		</dependency>
 		<!-- end Apache Commons Lang -->
+
+		<!-- SocialAuth -->
+		<dependency>
+			<groupId>org.brickred</groupId>
+			<artifactId>socialauth</artifactId>
+			<version>${social.auth.version}</version>
+		</dependency>
+		<!-- end SocialAUth -->
 
 		<!-- test dependencies -->
 		<dependency>
@@ -305,7 +313,8 @@
 		<guice.version>3.0</guice.version>
 		<javax.persistence.version>2.1.0</javax.persistence.version>
 		<eclipselink.version>2.5.1</eclipselink.version>
-		<apache.commons.lang>2.6</apache.commons.lang>
+		<apache.commons.lang.version>2.6</apache.commons.lang.version>
+		<social.auth.version>4.10</social.auth.version>
 		<!-- end core dependencies properties -->
 
 		<!-- test dependencies properties -->

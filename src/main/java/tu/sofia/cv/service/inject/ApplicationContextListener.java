@@ -14,6 +14,7 @@ import com.google.inject.Injector;
 import com.google.inject.persist.PersistService;
 import com.google.inject.servlet.GuiceServletContextListener;
 
+import tu.sofia.cv.service.AuthService;
 import tu.sofia.cv.service.CompanyService;
 import tu.sofia.cv.service.EducationService;
 import tu.sofia.cv.service.GeneralExceptionHandler;
@@ -84,6 +85,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		getSingletons().add(injector.getInstance(ProjectService.class));
 		getSingletons().add(injector.getInstance(CompanyService.class));
 		getSingletons().add(injector.getInstance(PositionService.class));
+		getSingletons().add(injector.getInstance(AuthService.class));
 
 		// Public services
 		getSingletons().add(injector.getInstance(RolesPublicService.class));

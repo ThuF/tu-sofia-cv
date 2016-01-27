@@ -18,6 +18,7 @@
 		<input class="btn btn-default" type="button" value="New" ng-click="setOperation('new')" ng-disabled="errorMessage || operation == 'update'">
 		<input class="btn btn-default" type="button" value="Edit" ng-click="setOperation('update')" ng-disabled="errorMessage || operation == 'new'">
 		<input class="btn btn-default" type="button" value="Delete" ng-click="delete()" ng-disabled="errorMessage || operation == 'new' || operation == 'update'">
+		<a class="btn btn-default" href="../../../../api/v1/protected/admin/auth/github"><i class="fa fa-github"></i> | Connect</a>
 	</div>
 	<br>
 	<br>

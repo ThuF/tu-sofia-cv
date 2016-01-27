@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import tu.sofia.cv.common.DateUtils;
+import tu.sofia.cv.entity.additional.LinkedInPositions.LinkedInPositionsWrapper.LinkedInPosition;
+
 /**
  * Entity class representing the T_POSITION database table
  */
@@ -50,6 +53,29 @@ public class Position implements IJPAEntity<Long>, Serializable {
 
 	@OneToOne
 	private Company company;
+
+	/**
+	 * Constructor
+	 */
+	public Position() {
+
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param position
+	 */
+	public Position(LinkedInPosition position) {
+		DateUtils dateUtils = new DateUtils();
+		setTitle(position.getTitle());
+		if (position.getStartDate() != null) {
+			setStartDate(dateUtils.getDate(position.getStartDate().getYear(), position.getStartDate().getMonth()));
+		}
+		if (position.getEndDate() != null) {
+			setEndDate(dateUtils.getDate(position.getEndDate().getYear(), position.getEndDate().getMonth()));
+		}
+	}
 
 	/**
 	 * Returns the position Id
@@ -129,7 +155,7 @@ public class Position implements IJPAEntity<Long>, Serializable {
 
 	/**
 	 * Returns the icon
-	 * 
+	 *
 	 * @return the icon
 	 */
 	public String getIcon() {
@@ -138,7 +164,7 @@ public class Position implements IJPAEntity<Long>, Serializable {
 
 	/**
 	 * Sets the icon
-	 * 
+	 *
 	 * @param icon
 	 *            the icon
 	 */

@@ -8,5 +8,6 @@
 		<input class="btn btn-default" type="button" value="Edit" ng-click="setReadonly(false)" ng-disabled="errorMessage" ng-show="readonly">
 		<input class="btn btn-primary" type="button" value="Save" ng-hide="readonly" ng-click="saveChanges()"> 
 		<input class="btn btn-default" type="button" value="Cancel" ng-hide="readonly" ng-click="cancelChanges()">
+		<a class="btn btn-default" href="../../../../api/v1/protected/admin/auth/linkedin" ng-show="readonly"><i class="fa fa-linkedin"></i> | Connect</a>
 	</div>
 </div>

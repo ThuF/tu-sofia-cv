@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import tu.sofia.cv.entity.additional.LinkedInAccount;
+
 /**
  * Entity class representing the T_PERSONAL_INFO database table
  */
@@ -39,6 +41,26 @@ public class PersonalInfo implements IJPAEntity<Long>, Serializable {
 
 	@Column(length = 150)
 	private String linkedinProfileUrl;
+
+	/**
+	 * Constructor
+	 */
+	public PersonalInfo() {
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param account
+	 */
+	public PersonalInfo(LinkedInAccount account) {
+		setFirstName(account.getFirstName());
+		setLastName(account.getLastName());
+		setHeadline(account.getHeadline());
+		if (account.getProfileRequest() != null) {
+			setLinkedinProfileUrl(account.getProfileRequest().getUrl());
+		}
+	}
 
 	/**
 	 * Returns the personal info Id
@@ -146,7 +168,7 @@ public class PersonalInfo implements IJPAEntity<Long>, Serializable {
 
 	/**
 	 * Sets the twitter profile URL
-	 * 
+	 *
 	 * @param twitterProfileUrl
 	 *            the twitter profile URL
 	 */
@@ -156,7 +178,7 @@ public class PersonalInfo implements IJPAEntity<Long>, Serializable {
 
 	/**
 	 * Returns the linkedin profile URL
-	 * 
+	 *
 	 * @return the linkedin profile URL
 	 */
 	public String getLinkedinProfileUrl() {
@@ -165,7 +187,7 @@ public class PersonalInfo implements IJPAEntity<Long>, Serializable {
 
 	/**
 	 * Sets the linkedin profile URL
-	 * 
+	 *
 	 * @param linkedinProfileUrl
 	 */
 	public void setLinkedinProfileUrl(String linkedinProfileUrl) {
