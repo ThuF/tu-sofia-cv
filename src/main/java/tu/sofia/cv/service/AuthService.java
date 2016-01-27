@@ -78,8 +78,8 @@ public class AuthService {
 	@GET
 	@Path("/linkedin")
 	public void authenticateLinkedIn(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
-		response.sendRedirect(
-				oaAuthUtils.authenticate(request, ICommonConstants.OAuthProviders.Names.LINKEDIN, ICommonConstants.Destinations.Names.OAUTH_LINKEDIN));
+		response.sendRedirect(oaAuthUtils.authenticate(request, ICommonConstants.OAuthProviders.Names.LINKEDIN,
+				ICommonConstants.Destinations.Names.OAUTH_LINKEDIN));
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class AuthService {
 
 	/**
 	 * GitHub authentication callback
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @throws Exception
